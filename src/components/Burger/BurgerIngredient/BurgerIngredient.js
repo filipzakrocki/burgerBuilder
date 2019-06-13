@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Auxilliary from '../../../hoc/Auxilliary/Auxilliary'
 
 import classes from './BurgerIngredient.css'
 
@@ -27,6 +28,12 @@ const burgerIngredient = (props) => {
             break;
         case ('bacon'):
             ingredient = <div className={classes.Bacon}></div>
+            break;
+        case ('egg'):
+            ingredient = <Auxilliary>
+                    <div className={classes.Egg}></div>
+                    <div className={classes.Egg2}></div>
+                </Auxilliary>
             break;
         default:
             ingredient = null;

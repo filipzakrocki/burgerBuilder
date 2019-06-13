@@ -32,7 +32,7 @@ class Layout extends Component {
                     clicked={this.props.purchaseHandler}
                     open={this.state.showSideDrawer}
                     closed={this.sideDrawerClosedHandler}/>
-                <div>Toolbar, SideDrawer, Backdrop</div>
+
                 <main className={classes.Content}>{this.props.children}</main>
             </Auxilliary>
         )

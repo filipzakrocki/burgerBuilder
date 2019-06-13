@@ -111,3 +111,22 @@
     background: linear-gradient(#bf3813, #c45e38);
     margin: 2% auto;
 }
+
+.Egg {
+    width: 23%;
+    height: 2%;
+    border-top-left-radius: 90%;
+    border-top-right-radius: 90%;
+    background: linear-gradient(#FFF5c3, #FFF5c3);
+    margin: 2% auto 0%;
+}
+
+.Egg2 {
+    width: 83%;
+    height: 2%;
+    border: RGBA(0,0,0,.2) solid .3px;
+    border-top-left-radius: 120%;
+    border-top-right-radius: 120%;
+    background: linear-gradient(#FFFFF3, #ECE9E6);
+    margin: 0% auto 2%;
+}

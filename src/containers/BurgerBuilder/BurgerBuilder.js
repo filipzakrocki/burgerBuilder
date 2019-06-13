@@ -8,21 +8,33 @@ import Modal from '../../components/UI/Modal/Modal'
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary'
 
 const INGEDIENT_PRICES = {
+    egg: 0.6,
     salad: 0.5,
     cheese: 0.4,
     bacon: 0.7,
-    meat: 1.3
+    meat: 1.3,
+}
+
+const INGREDIENT_KCAL = {
+    egg: 90,
+    salad: 5,
+    cheese: 85,
+    bacon: 144,
+    meat: 195,
 }
 
 class BurgerBuilder extends Component {
     state = {
         ingredients: {
             salad: 0,
+            egg: 0,
             bacon: 0,
             cheese: 0,
-            meat: 0
+            meat: 0,
+            
         },
         totalPrice: 4,
+        totalKcal: 120,
         purchasable: false,
         purchasing: false
     }
@@ -66,6 +78,11 @@ class BurgerBuilder extends Component {
             ingredients: updatedIngredients
         })
         this.updatePurchaseState(updatedIngredients);
+        
+        const oldKcal = this.state.totalKcal;
+        const updatedKcal = oldKcal + INGREDIENT_KCAL[type];
+        this.setState({totalKcal: updatedKcal})
+        
     }
     
     removeIngredientHandler = (type) => {
@@ -86,6 +103,10 @@ class BurgerBuilder extends Component {
             ingredients: updatedIngredients
         })
         this.updatePurchaseState(updatedIngredients);
+        
+        const oldKcal = this.state.totalKcal;
+        const updatedKcal = oldKcal - INGREDIENT_KCAL[type];
+        this.setState({totalKcal: updatedKcal})
     }
     
     render() {
@@ -116,6 +137,7 @@ class BurgerBuilder extends Component {
                     ingredientAdded={this.addIngredientHandler}
                     ingredientRemoved={this.removeIngredientHandler}
                     price={this.state.totalPrice}
+                    totalKcal={this.state.totalKcal}
                     disabled={disabledInfo}
                     purchasable={this.state.purchasable}/>
                 
