@@ -45,6 +45,8 @@ class Checkout extends React.Component {
             <div>
                 <CheckoutSummary
                     ingredients={this.state.ingredients}
+                    kcal={this.state.kcal}
+                    price={this.state.price}
                     checkoutCancelled={this.checkoutCancelledHandler}
                     checkoutContinued={this.checkoutContinuedHandler}/>
                 <Route

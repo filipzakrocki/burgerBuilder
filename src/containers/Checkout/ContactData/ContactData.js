@@ -13,18 +13,19 @@ class ContactData extends React.Component {
             street: '',
             postalCode: '',
         },
-        loading: false
+        loading: false,
         
     };
 
-
     orderHandler = (event) => {
         event.preventDefault();
-        this.setState({loading: true})
+        this.setState({loading: true});
+
         const order = {
+            orderTime: new Date(),
             ingredients: this.props.ingredients,
-            price: this.props.totalPrice,
-            kcal: this.props.totalKcal,
+            price: this.props.price,
+            kcal: this.props.kcal,
             customer:  {
                 name: 'Filip Zakrocki',
                 address: {
