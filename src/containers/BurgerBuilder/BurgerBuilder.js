@@ -33,7 +33,7 @@ class BurgerBuilder extends Component {
         ingredients: null,
         totalPrice: 4, //starting price
         totalKcal: 120, // bun kcal
-        purchasable: false, // ingredients added, can you buy?
+        purchasable: false, // ingredients present, can you buy?
         purchasing: false, // moved to checkout?
         loading: false, // is the request being sent?
     }
@@ -43,6 +43,7 @@ class BurgerBuilder extends Component {
         .then(response => {
             this.setState({ingredients: response.data})
             this.updateInitialKcalHandler();
+            this.updatePurchaseState(this.state.ingredients);
         })
         .catch(err => {
             this.setState({error: true})
@@ -69,37 +70,26 @@ class BurgerBuilder extends Component {
 
     
     purchaseContinueHandler = () => {
-//        this.setState({loading: true})
-//        const order = {
-//            ingredients: this.state.ingredients,
-//            price: this.state.totalPrice,
-//            kcal: this.state.totalKcal,
-//            customer:  {
-//                name: 'Filip Zakrocki',
-//                address: {
-//                    street: 'teststreet 1/2',
-//                    city: 'London',
-//                    zipCode: '123456'
-//                },
-//                email: 'test@test.com',
-//                delivery: 'true'
-//            }
-//        }
-//        axios.post('/orders.json', order)
-//        .then(response => {
-//            this.setState({loading: false, purchasing: false})
-//        })
-//        .catch(error => {
-//            this.setState({loading: false, purchasing: false})
-//
-//        } );
         
-        this.props.history.push('/checkout')
+        const queryParams = [];
+        
+        for (let i in this.state.ingredients) {
+            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
+        }
+        queryParams.push('price=' + this.state.totalPrice)        
+        queryParams.push('kcal=' + this.state.totalKcal)        
+        const queryString = queryParams.join('&');
+        
+        this.props.history.push({
+            pathname: '/checkout',
+            search: '?' + queryString
+        })
     }
     
     purchaseCancelHandler = () => {
         this.setState({purchasing: false})
     }
+    
     
     updatePurchaseState = (ingredients) => {
 
@@ -170,6 +160,8 @@ class BurgerBuilder extends Component {
         
         
     }
+    
+    
     
     render() {
         
