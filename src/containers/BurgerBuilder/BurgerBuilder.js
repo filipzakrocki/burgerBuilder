@@ -18,9 +18,6 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 class BurgerBuilder extends Component {
     
     state = {
-        totalPrice: 4, //starting price
-        totalKcal: 120, // bun kcal
-        purchasable: false, // ingredients present, can you buy?
         purchasing: false, // moved to checkout?
         loading: false, // is the request being sent?
     }
@@ -35,9 +32,6 @@ class BurgerBuilder extends Component {
         // .catch(err => {
         //     this.setState({error: true})
         // })
-        
-        
-        
     }
     
     purchaseHandler = () => {
@@ -68,17 +62,7 @@ class BurgerBuilder extends Component {
     }
     
     
-    updatePurchaseState = (ingredients) => {
 
-        const sum = Object.keys(ingredients)
-        .map( igKey => {
-            return ingredients[igKey]
-        })
-        .reduce( (sum, el) => {
-            return sum+el;
-        } ,0);
-        this.setState({purchasable: sum > 0})
-    }
  
 
     
@@ -107,7 +91,7 @@ class BurgerBuilder extends Component {
                     price={this.props.prc}
                     totalKcal={this.props.kcal}
                     disabled={disabledInfo}
-                    purchasable={this.state.purchasable}/>
+                    purchasable={this.props.pur}/>
             </Auxilliary>
         );
             
@@ -142,7 +126,8 @@ const mapStateToProps = state => {
     return {
         ings: state.ingredients,
         prc: state.totalPrice,
-        kcal: state.totalKcal
+        kcal: state.totalKcal,
+        pur: state.purchasable
     }
 }
 
