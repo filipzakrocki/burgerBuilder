@@ -2,8 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import {BrowserRouter} from 'react-router-dom'
-import registerServiceWorker from './registerServiceWorker';
+import {BrowserRouter, HashRouter} from 'react-router-dom'
 //redux
 import reducer from './store/reducer'
 import {createStore} from 'redux'
@@ -13,9 +12,9 @@ const store = createStore(reducer);
 
 const app = (
     <Provider store={store}>
-        <BrowserRouter>
+        <HashRouter>
             <App/>
-        </BrowserRouter>
+        </HashRouter>
     </Provider>
 )
 
