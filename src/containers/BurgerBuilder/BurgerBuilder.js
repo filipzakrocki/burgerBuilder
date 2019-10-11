@@ -12,7 +12,7 @@ import OrderSummary from "../../components/Burger/OrderSummary/OrderSummary";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 
 // action creators
-import * as burgerBuilderActions from "../../store/actions/index";
+import * as actions from "../../store/actions/index";
 
 class BurgerBuilder extends Component {
   state = {
@@ -28,21 +28,24 @@ class BurgerBuilder extends Component {
   };
 
   purchaseContinueHandler = () => {
-    const queryParams = [];
+    this.props.onInitPurchase();
+    this.props.history.push("/checkout");
 
-    for (let i in this.props.ings) {
-      queryParams.push(
-        encodeURIComponent(i) + "=" + encodeURIComponent(this.props.ings[i])
-      );
-    }
-    queryParams.push("price=" + this.props.prc);
-    queryParams.push("kcal=" + this.props.kcal);
-    const queryString = queryParams.join("&");
+    // const queryParams = [];
 
-    this.props.history.push({
-      pathname: "/checkout",
-      search: "?" + queryString
-    });
+    // for (let i in this.props.ings) {
+    //   queryParams.push(
+    //     encodeURIComponent(i) + "=" + encodeURIComponent(this.props.ings[i])
+    //   );
+    // }
+    // queryParams.push("price=" + this.props.prc);
+    // queryParams.push("kcal=" + this.props.kcal);
+    // const queryString = queryParams.join("&");
+
+    // this.props.history.push({
+    //   pathname: "/checkout",
+    //   search: "?" + queryString
+    // });
   };
 
   purchaseCancelHandler = () => {
@@ -107,21 +110,20 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    ings: state.ingredients,
-    prc: state.totalPrice,
-    kcal: state.totalKcal,
-    pur: state.purchasable,
-    err: state.error
+    ings: state.burgerBuilder.ingredients,
+    prc: state.burgerBuilder.totalPrice,
+    kcal: state.burgerBuilder.totalKcal,
+    pur: state.burgerBuilder.purchasable,
+    err: state.burgerBuilder.error
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onIngredientAdded: ingName =>
-      dispatch(burgerBuilderActions.addIngredient(ingName)),
-    onIngredientRemoved: ingName =>
-      dispatch(burgerBuilderActions.removeIngredient(ingName)),
-    onInitIngredients: () => dispatch(burgerBuilderActions.initIngredients())
+    onIngredientAdded: ingName => dispatch(actions.addIngredient(ingName)),
+    onIngredientRemoved: ingName => dispatch(actions.removeIngredient(ingName)),
+    onInitIngredients: () => dispatch(actions.initIngredients()),
+    onInitPurchase: () => dispatch(actions.purchaseInit())
   };
 };
 

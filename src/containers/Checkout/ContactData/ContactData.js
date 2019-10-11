@@ -3,10 +3,10 @@ import { connect } from "react-redux";
 
 import Button from "../../../components/UI/Button/Button";
 import classes from "./ContactData.css";
-// import axios from "../../../axios-orders";
+import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
-// import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
 
 import * as actions from "../../../store/actions/index";
 
@@ -211,10 +211,10 @@ class ContactData extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    ings: state.ingredients,
-    price: state.totalPrice,
-    kcal: state.totalKcal,
-    loading: state.loading
+    ings: state.burgerBuilder.ingredients,
+    price: state.burgerBuilder.totalPrice,
+    kcal: state.burgerBuilder.totalKcal,
+    loading: state.order.loading
   };
 };
 
@@ -227,4 +227,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(ContactData);
+)(withErrorHandler(ContactData, axios));
