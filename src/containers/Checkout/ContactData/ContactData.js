@@ -113,7 +113,7 @@ class ContactData extends React.Component {
 
     const order = {
       orderTime: new Date(),
-      ingredients: this.props.ingredients,
+      ingredients: this.props.ings,
       price: this.props.price,
       kcal: this.props.kcal,
       orderData: formData
