@@ -1,4 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
+import { updateObject } from "../utility";
 
 const initialState = {
   ingredients: null,
@@ -27,31 +28,38 @@ const INGREDIENT_KCAL = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.ADD_INGREDIENT:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredientName]: state.ingredients[action.ingredientName] + 1
-        },
-        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+      const updatedIngredient = {
+        [action.ingredientName]: state.ingredients[action.ingredientName] + 1
+      };
+      const updatedIngredients = updateObject(
+        state.ingredients,
+        updatedIngredient
+      );
+      const updatedState = {
+        ingredients: updatedIngredients,
         totalKcal: state.totalKcal + INGREDIENT_KCAL[action.ingredientName],
-        purchasable:
-          initialState.totalPrice !==
-          state.totalPrice + INGREDIENT_PRICES[action.ingredientName]
+        totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
+        purchasable: initialState.ingredients !== state.ingredients
       };
+      return updateObject(state, updatedState);
+
     case actionTypes.REMOVE_INGREDIENT:
-      return {
-        ...state,
-        ingredients: {
-          ...state.ingredients,
-          [action.ingredientName]: state.ingredients[action.ingredientName] - 1
-        },
-        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
-        totalKcal: state.totalKcal - INGREDIENT_KCAL[action.ingredientName],
-        purchasable:
-          initialState.totalPrice !==
-          state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+      const updatedIngredientRemove = {
+        [action.ingredientName]: state.ingredients[action.ingredientName] - 1
       };
+      const updatedIngredientsRemove = updateObject(
+        state.ingredients,
+        updatedIngredientRemove
+      );
+      const updatedStateRemove = {
+        ingredients: updatedIngredientsRemove,
+        totalKcal: state.totalKcal - INGREDIENT_KCAL[action.ingredientName],
+        totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+        purchasable: initialState.ingredients === state.ingredients
+      };
+
+      return updateObject(state, updatedStateRemove);
+
     case actionTypes.SET_INGREDIENTS:
       return {
         ...state,
