@@ -14,13 +14,17 @@ const authStart = (state, action) => {
 const authSuccess = (state, action) => {
   return updateObject(state, {
     loading: false,
-    userId: action.localId,
-    token: action.idToken,
+    localId: action.localId,
+    idToken: action.idToken,
     error: null
   });
 };
 const authFail = (state, action) => {
   return updateObject(state, { loading: false, error: action.error });
+};
+
+const authLogOut = (state, action) => {
+  return updateObject(state, { idToken: null, localId: null });
 };
 
 const reducer = (state = initialState, action) => {
@@ -31,6 +35,8 @@ const reducer = (state = initialState, action) => {
       return authSuccess(state, action);
     case actionTypes.AUTH_FAIL:
       return authFail(state, action);
+    case actionTypes.AUTH_LOGOUT:
+      return authLogOut(state, action);
     default:
       return state;
   }

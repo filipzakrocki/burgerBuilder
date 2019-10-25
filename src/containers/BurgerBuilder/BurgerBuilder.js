@@ -24,7 +24,11 @@ class BurgerBuilder extends Component {
   };
 
   purchaseHandler = () => {
-    this.setState({ purchasing: true });
+    if (this.props.isAuthenticated) {
+      this.setState({ purchasing: true });
+    } else {
+      this.props.history.push("/auth");
+    }
   };
 
   updatePurchaseState(ingredients) {
@@ -41,22 +45,6 @@ class BurgerBuilder extends Component {
   purchaseContinueHandler = () => {
     this.props.onInitPurchase();
     this.props.history.push("/checkout");
-
-    // const queryParams = [];
-
-    // for (let i in this.props.ings) {
-    //   queryParams.push(
-    //     encodeURIComponent(i) + "=" + encodeURIComponent(this.props.ings[i])
-    //   );
-    // }
-    // queryParams.push("price=" + this.props.prc);
-    // queryParams.push("kcal=" + this.props.kcal);
-    // const queryString = queryParams.join("&");
-
-    // this.props.history.push({
-    //   pathname: "/checkout",
-    //   search: "?" + queryString
-    // });
   };
 
   purchaseCancelHandler = () => {
@@ -91,6 +79,7 @@ class BurgerBuilder extends Component {
             totalKcal={this.props.kcal}
             disabled={disabledInfo}
             purchasable={this.updatePurchaseState(this.props.ings)}
+            isAuthenticated={this.props.isAuthenticated}
           />
         </Auxilliary>
       );
@@ -125,7 +114,8 @@ const mapStateToProps = state => {
     prc: state.burgerBuilder.totalPrice,
     kcal: state.burgerBuilder.totalKcal,
     pur: state.burgerBuilder.purchasable,
-    err: state.burgerBuilder.error
+    err: state.burgerBuilder.error,
+    isAuthenticated: state.auth.idToken !== null
   };
 };
 
