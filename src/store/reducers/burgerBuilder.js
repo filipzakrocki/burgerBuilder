@@ -6,7 +6,8 @@ const initialState = {
   totalPrice: 4,
   totalKcal: 120,
   // purchasable: false,
-  error: false
+  error: false,
+  building: false
 };
 
 const INGREDIENT_PRICES = {
@@ -34,7 +35,8 @@ const addIngredient = (state, action) => {
     ingredients: updatedIngredients,
     totalKcal: state.totalKcal + INGREDIENT_KCAL[action.ingredientName],
     totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredientName],
-    purchasable: initialState.ingredients !== state.ingredients
+    purchasable: initialState.ingredients !== state.ingredients,
+    building: true
   };
   return updateObject(state, updatedState);
 };
@@ -50,7 +52,8 @@ const removeIngredient = (state, action) => {
   const updatedStateRemove = {
     ingredients: updatedIngredientsRemove,
     totalKcal: state.totalKcal - INGREDIENT_KCAL[action.ingredientName],
-    totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName]
+    totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredientName],
+    building: true
   };
   return updateObject(state, updatedStateRemove);
 };
@@ -66,7 +69,8 @@ const setIngredients = (state, action) => {
     },
     error: false,
     totalPrice: initialState.totalPrice,
-    totalKcal: initialState.totalKcal
+    totalKcal: initialState.totalKcal,
+    building: false
   });
 };
 
