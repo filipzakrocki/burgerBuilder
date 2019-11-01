@@ -7,6 +7,7 @@ import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import { updateObject } from "../../../shared/utility";
 
 import * as actions from "../../../store/actions/index";
 
@@ -116,7 +117,8 @@ class ContactData extends React.Component {
       ingredients: this.props.ings,
       price: this.props.price,
       kcal: this.props.kcal,
-      orderData: formData
+      orderData: formData,
+      userId: this.props.userId
     };
 
     this.props.onOrderBurger(order, this.props.token);
@@ -141,7 +143,6 @@ class ContactData extends React.Component {
   };
 
   inputChanged = (event, inputIdentifier) => {
-    console.log(event.target.value);
     const updatedOrderForm = {
       ...this.state.orderForm
     };
@@ -215,7 +216,8 @@ const mapStateToProps = state => {
     price: state.burgerBuilder.totalPrice,
     kcal: state.burgerBuilder.totalKcal,
     loading: state.order.loading,
-    token: state.auth.idToken
+    token: state.auth.idToken,
+    userId: state.auth.localId
   };
 };
 

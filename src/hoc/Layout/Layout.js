@@ -31,6 +31,7 @@ class Layout extends Component {
           toggle={this.sideDrawerToggleHandler}
         />
         <SideDrawer
+          isAuthenticated={this.props.isAuthenticated}
           clicked={this.props.purchaseHandler}
           open={this.state.showSideDrawer}
           closed={this.sideDrawerClosedHandler}
