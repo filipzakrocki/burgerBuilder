@@ -7,7 +7,7 @@ import axios from "../../../axios-orders";
 import Spinner from "../../../components/UI/Spinner/Spinner";
 import Input from "../../../components/UI/Input/Input";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
-import { updateObject } from "../../../shared/utility";
+import { updateObject, checkValidity } from "../../../shared/utility";
 
 import * as actions from "../../../store/actions/index";
 
@@ -79,6 +79,7 @@ class ContactData extends React.Component {
         valid: false,
         touched: false,
         validation: {
+          isEmail: true,
           required: true
         }
       },
@@ -90,9 +91,9 @@ class ContactData extends React.Component {
             { value: "cheapest", displayValue: "Cheapest" }
           ]
         },
-        valid: false,
+        valid: true,
         validation: {
-          required: true
+          required: false
         },
         value: "fastest",
         touched: false
@@ -124,30 +125,12 @@ class ContactData extends React.Component {
     this.props.onOrderBurger(order, this.props.token);
   };
 
-  checkValidity = (value, rules) => {
-    let isValid = true;
-
-    if (rules.required && isValid) {
-      isValid = value.trim() !== "";
-    }
-
-    if (rules.minLength && isValid) {
-      isValid = value.length >= rules.minLength;
-    }
-
-    if (rules.maxLength && isValid) {
-      isValid = value.length <= rules.maxLength;
-    }
-
-    return isValid;
-  };
-
   inputChanged = (event, inputIdentifier) => {
     const updatedFormElement = updateObject(
       this.state.orderForm[inputIdentifier],
       {
         value: event.target.value,
-        valid: this.checkValidity(
+        valid: checkValidity(
           event.target.value,
           this.state.orderForm[inputIdentifier].validation
         ),

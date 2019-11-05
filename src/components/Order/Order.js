@@ -28,6 +28,8 @@ const order = props => {
     ) : null;
   });
 
+  const formattedDate = date => new Date(date).toUTCString();
+
   return (
     <div className={classes.Order}>
       <p>Ingredients: {ingredientOutput}</p>
@@ -41,6 +43,16 @@ const order = props => {
         }}
       >
         Kcal: {props.kcal}
+      </p>
+      <p
+        style={{
+          color: "gray",
+          fontWeight: "100",
+          textAlign: "right",
+          fontSize: "12px"
+        }}
+      >
+        Order Time: {formattedDate(props.date)}
       </p>
     </div>
   );

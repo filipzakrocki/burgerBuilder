@@ -15,11 +15,14 @@ class Orders extends Component {
   render() {
     let orders = this.props.loading ? (
       <Spinner />
+    ) : this.props.orders.length === 0 ? (
+      <h1 style={{ textAlign: "center" }}>'No orders placed yet!'</h1>
     ) : (
       <div>
         {this.props.orders.map(order => (
           <Order
             key={order.id}
+            date={order.orderTime}
             kcal={order.kcal}
             price={order.price}
             ingredients={order.ingredients}
