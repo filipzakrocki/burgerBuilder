@@ -35,15 +35,18 @@ const order = props => {
       <p>Ingredients: {ingredientOutput}</p>
       <p>
         Price: <strong>{props.price.toFixed(2)} USD</strong>
+        <span
+          style={{
+            color: props.kcal >= 1000 ? "red" : "green",
+            fontWeight: "600",
+
+            marginLeft: "100px"
+          }}
+        >
+          Kcal: {props.kcal}
+        </span>
       </p>
-      <p
-        style={{
-          color: props.kcal >= 1000 ? "red" : "green",
-          fontWeight: "600"
-        }}
-      >
-        Kcal: {props.kcal}
-      </p>
+
       <p
         style={{
           color: "gray",
