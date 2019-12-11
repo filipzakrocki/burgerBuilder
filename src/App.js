@@ -13,7 +13,7 @@ import { asyncComponent } from "../src/hoc/asyncComponent";
 import Layout from "./hoc/Layout/Layout";
 import BurgerBuilder from "./containers/BurgerBuilder/BurgerBuilder";
 
-//Lazy Loaded
+//Lazy Loaded, commenting out imports
 // import Checkout from "./containers/Checkout/Checkout";
 // import Orders from "./containers/Orders/Orders";
 // import Auth from "./containers/Auth/Auth";
@@ -79,9 +79,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    mapDispatchToProps
-  )(App)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
