@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  BrowserRouter,
+  HashRouter,
   Route,
   Switch,
   withRouter,
@@ -60,7 +60,7 @@ class App extends Component {
     return (
       <div>
         <Layout>
-          <BrowserRouter>{routes}</BrowserRouter>
+          <HashRouter>{routes}</HashRouter>
         </Layout>
       </div>
     );
@@ -79,4 +79,9 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps
+  )(App)
+);
