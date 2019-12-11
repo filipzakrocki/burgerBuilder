@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {
-  HashRouter,
+  BrowserRouter,
   Route,
   Switch,
   withRouter,
@@ -60,7 +60,7 @@ class App extends Component {
     return (
       <div>
         <Layout>
-          <HashRouter>{routes}</HashRouter>
+          <BrowserRouter basename="/burgerBuilder">{routes}</BrowserRouter>
         </Layout>
       </div>
     );
